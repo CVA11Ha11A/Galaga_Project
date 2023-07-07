@@ -9,12 +9,15 @@ public class PlayerMove : MonoBehaviour
 
     public GameObject PlayerBullet;
 
+    public float playerLife = 2;
+    
 
 
     // Start is called before the first frame update
     void Start()
     {
         playerRigidbody = GetComponent<Rigidbody>();
+        
     }
 
     // Update is called once per frame
@@ -42,7 +45,14 @@ public class PlayerMove : MonoBehaviour
 
     public void PlayerDie()
     {
+        if(playerLife <= 0)
+        { 
         gameObject.SetActive(false);
+
+            GameManage gameManage = FindObjectOfType<GameManage>();
+            gameManage.EndGame();
+        }
+
 
     }
 

@@ -39,7 +39,7 @@ public class EnemyBullet : MonoBehaviour
             if (player != null)
             {
                 player.PlayerDie();
-
+                player.playerLife -= 1;
             }
 
 

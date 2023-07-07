@@ -5,9 +5,10 @@ using UnityEngine;
 
 public class PlayerBullet : MonoBehaviour
 {
+    private GameManage manage = default;
     private Rigidbody playerBullet = default;
     public float bulletSpeed = 3.0f;
-
+    
     // Start is called before the first frame update
     void Start()
     {
@@ -34,10 +35,11 @@ public class PlayerBullet : MonoBehaviour
         {
             //여기서 적의 Die 메서드 만들고 돌아와서 충돌시 상대의 클레스를 가져오고 destroy실행하면될듯
             EnemySlime enemySlime = other.GetComponent<EnemySlime>();
-
+            manage = FindAnyObjectByType<GameManage>();
             if (enemySlime != null)
             {
                 enemySlime.EnemyDie();
+                manage.playerScore += 100;
 
             }
 
