@@ -1,0 +1,104 @@
+FindObjectOfType
+
+
+오후 11:21 2023-07-22
+
+GalagaProject 프로토타입재개
+
+1.몬스터가 아래 벽에 부딪쳤을때에 무언가 없음
+(아래벽에 트리거를 지정해놓고 OnTrigger 로 몇초뒤 Destroy 하면 될듯?)
+
+2.게임의 엔딩이 없음 특정 조건을 달아주어야 할거같음
+
+3. Player 의 Life를 지정해서 맞을때 달도록 설정해야할듯
+
+
+오후 11:49 2023-07-22
+
+1번째 시작 (몬스터가 아래 벽과 충돌했을때에 무언가)
+
+OnTriggerEnter에 If  조건을 달아서 tag 가 적에게 지정해준 tag 라면 Destroy(other);
+시도 했는데 안됨
+	프리펩 들어가서 안된것 있는지 스포너는 프리펩을 잘사용하고 있는지 확인
+	트리거 켜져있는거 확인
+	적에게 준 태그 확인
+	
+Trigger에 Log를 찍어서 object.name 을통해 들어오는지 확인해봐야겠음
+
+결과 : name을 찍어보니 OnTriggerEnter에 잘들어감
+
+그럼 왜 
+
+ if(other.gameObject.CompareTag("Enemy") || other.gameObject.CompareTag("Bullet"))
+        {
+            Destroy(other);
+        }
+
+이건 잘 실행이 안됬을까
+
+위 조건을 나누어서 if문 2개로 해봐야겠음
+
+
+오전 12:08 2023-07-23
+
+1번째 시도중 문제 해결 위에서 if 2개로 나누는 도중에 Destroy(other.gameobject) 로 바꾸어주니 잘됨
+앞으로 Destroy나 무언갈할때 최대한 안쪽까지 찍어주어야 할거같음
+
+결과코드
+
+   private void OnTriggerEnter(Collider other)
+    {
+        //Debug.LogFormat("들어온 오브젝트의 이름 -> {0}",other.name);
+
+        if(other.gameObject.CompareTag("Enemy"))
+        {
+            Destroy(other.gameObject);
+        }
+
+        if(other.gameObject.CompareTag("Bullet"))
+        {
+            Destroy(other.gameObject);
+        }
+    }
+
+
+오전 12:10 2023-07-23
+
+2번 시작 (게임 엔딩)
+
+! 플레이어가 죽었을때에 GameOver가 안되는 문제점을 찾음
+
+플레이어가 죽었을때에 GameOverText가 Active = True로 바뀌는건 확인됨
+하지만 화면상에 출력이 되진 않음
+
+추론 : GameManager가 GameObject로 할당을 받는데
+나머지 나오는 텍스트 들은 Text 로 받음 그럼 setActive를 위해 빈 오브젝트를 놓고
+그안에 Text 를 상속시켜서 하면 되지않을까 싶음
+
+시도해보았지만 실패
+
+
+아마 하이얼하키 창에서 잘 조절해야 하나 싶음
+
+오전 1:09 2023-07-23
+
+확인을 해보니 Well_Plane 이라는 하이얼하키창속 오브젝트가 글자를 가려서 안보인거였음
+
+그럼 원활한 스크립트를 위해 빈오브젝트에 Destroy해도되는것과 안되는것을 나누어서 
+플레이어가 죽었을때에 Destroy해도되는걸 부수고 나오게 하면 되지 않을까 싶음
+
+YesDestroy 라는 빈오브젝트를 만들어서 죽었을때에 Destroy.gameobject 했더니 몬스터와
+몬스터의 탄알 을 제외한것이 없어져서 이제 Text 는 보이게 됨
+
+
+오전 1:50 2023-07-23
+
+3번 시도 해보았지만 Canvas 와 Object 사진 위치 조정을 도저히 할수가 없어서  Life 숫자로 표기
+추후 Canvas 나 Object 위치를 잘다룰수 있게 된다면 시도할 예정
+
+
+
+
+오전 1:52 2023-07-23
+
+기능 확인 했음 여기서 마무리 ProtoType 완료

@@ -36,7 +36,7 @@ public class GameManage : MonoBehaviour
         if(!isGameover)
         {
             scoreText.text = "Score : "+(int)playerScore;
-            lifeText.text = "Life : " + (int)lifeCount.playerLife;
+            //lifeText.text = "Life : " + (int)lifeCount.playerLife;
         }
         else
         {
@@ -46,6 +46,8 @@ public class GameManage : MonoBehaviour
 
             }
         }
+
+
     }
 
     public void EndGame()
@@ -67,6 +69,14 @@ public class GameManage : MonoBehaviour
         bestScoreText.text = "BestScore : " + (int)bestscore;
 
 
+    }
+
+    public void PlayerLifeImg()
+    {
+        if(lifeCount.playerLife == 2)
+        {
+
+        }
     }
 
     //private void Awake()
