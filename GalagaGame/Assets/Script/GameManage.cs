@@ -9,7 +9,9 @@ public class GameManage : MonoBehaviour
 {
     //public static GameManage instance = null;
     public PlayerMove lifeCount;
-    public GameObject gameoverText;
+    public GameObject gameoverObj;
+    public GameObject yesDestroy;
+    public Text gameovetText;
     public Text scoreText;
     public Text bestScoreText;
     public Text lifeText;
@@ -50,7 +52,9 @@ public class GameManage : MonoBehaviour
     {
         isGameover = true;
 
-        gameoverText.SetActive(true);
+        Destroy(yesDestroy.gameObject);           
+
+        gameoverObj.SetActive(true);
 
         float bestscore = PlayerPrefs.GetFloat("BestScoreText");
 
